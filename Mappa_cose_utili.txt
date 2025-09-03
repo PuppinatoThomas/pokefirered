@@ -1,0 +1,15 @@
+pokefirered/src/data/trainer_parties.h contiene i pokemon degli allenatori
+
+pokefirered/src/data/pokemon/species_info.h contiene le struct dei pokemon in generale
+
+pokefirered/include/constants/abilities.h contiene i nomi delle abilità enumerati
+
+pokefirered/src/pokemon.c può contenere gli effetti di alcune abilità
+
+pokefirered/src/battle_util.c può contenere gli effetti delle restanti abilità
+
+pokefirered/data/battle_scripts_1.s contiene le routine che gestiscono le mosse
+
+pokefirered/src/data/battle_moves.h contiene le mosse
+
+pokefirered/src/battle_script_commands.c contiene le routine che si attivano quando viene eseguita una mossa

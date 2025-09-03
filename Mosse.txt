@@ -1,0 +1,32 @@
+BattleScript_EffectSwagger::
+	attackcanceler   //controlla se per qualche motivo l'attacco non può andare a segno (ad esempio se sono addormentato ho paralizzato)
+	jumpifstatus2 BS_TARGET, STATUS2_SUBSTITUTE, BattleScript_MakeMoveMissed //se il bersaglio ha sostituto la mossa fallisce
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE //controlla se la mossa colpisce basandosi sull'accuracy: se lo fa va a BattleScript_PrintMoveMissed
+	attackstring //stampa il nome della mossa
+	ppreduce // riduce i pp
+	jumpifconfusedandstatmaxed STAT_ATK, BattleScript_ButItFailed //se il bersaglio ha attacco al massimo ed è già confuso, la mossa fallisce
+	attackanimation
+	waitanimation
+	setstatchanger STAT_ATK, 2, FALSE //modifica l'attacco, FALSE serve per fermarsi a +6 come massimo
+	statbuffchange STAT_CHANGE_ALLOW_PTR, BattleScript_SwaggerTryConfuse //Effettua il cambiamento della statistica. Se riesce, prosegue; se no, salta a BattleScript_SwaggerTryConfuse.
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_INCREASE, BattleScript_SwaggerTryConfuse //Se ATTACCO è già al massimo (quindi il messaggio sarà "Non può aumentare di più!"), salta direttamente alla parte che prova a confondere.
+	setgraphicalstatchangevalues
+	playanimation BS_TARGET, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
+
+BattleScript_SwaggerTryConfuse:: //Etichetta per gestire la seconda parte: la confusione.
+	jumpifability BS_TARGET, ABILITY_OWN_TEMPO, BattleScript_OwnTempoPrevents //se il bersaglio ha Own Tempo, non può essere confuso → salta a BattleScript_OwnTempoPrevents.
+	jumpifsideaffecting BS_TARGET, SIDE_STATUS_SAFEGUARD, BattleScript_SafeguardProtected //Se il lato del bersaglio è protetto da Safeguard, non può essere confuso → salta a BattleScript_SafeguardProtected.
+	setmoveeffect MOVE_EFFECT_CONFUSION //Imposta l'effetto della mossa come "confusione"
+	seteffectprimary //applica effettivamente l'effetto
+	goto BattleScript_MoveEnd
+
+BattleScript_WaterVeilPrevents::
+	copybyte gEffectBattler, gBattlerTarget
+	setbyte cMULTISTRING_CHOOSER, B_MSG_ABILITY_PREVENTS_MOVE_STATUS
+	call BattleScript_BRNPrevention // call vuol dire che salta allo script, lo esegue e poi l'esecuzione riprende dalla riga successiva di questo script
+	goto BattleScript_MoveEnd
+
+
+gBattleMons[gBattlerAttacker].species == SPECIES_CHANSEY QUESTO STAVA IN BATTLE_SCRIPT_COMMANDS E CI VA VEDERE COME FARE CONTROLLI SU SINGOLI POKEMON
