@@ -13,3 +13,5 @@ pokefirered/data/battle_scripts_1.s contiene le routine che gestiscono le mosse
 pokefirered/src/data/battle_moves.h contiene le mosse
 
 pokefirered/src/battle_script_commands.c contiene le routine che si attivano quando viene eseguita una mossa
+
+pippo
