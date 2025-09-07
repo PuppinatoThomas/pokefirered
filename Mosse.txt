@@ -31,4 +31,4 @@ BattleScript_WaterVeilPrevents::
 
 gBattleMons[gBattlerAttacker].species == SPECIES_CHANSEY QUESTO STAVA IN BATTLE_SCRIPT_COMMANDS E CI VA VEDERE COME FARE CONTROLLI SU SINGOLI POKEMON
 
-questa è una prova
+questa è una prova xd xd
